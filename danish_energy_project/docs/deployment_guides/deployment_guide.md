@@ -1,9 +1,5 @@
 # Danish Energy Analytics Platform: Deployment Guide
 
-**Author:** Manus AI  
-**Date:** June 15, 2025  
-**Version:** 1.0  
-**Target Audience:** DevOps Engineers, System Administrators, Technical Teams
 
 ---
 
