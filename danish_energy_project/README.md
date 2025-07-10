@@ -4,10 +4,8 @@ A comprehensive end-to-end data engineering and analytics platform for Danish en
 
 ## 🚀 Quick Start
 
-### Option 1: Use Live Dashboard (Immediate)
-Visit the live dashboard: **https://vrqaqogw.manus.space**
 
-### Option 2: Local Setup (5 minutes)
+### Option 1: Local Setup (5 minutes)
 ```bash
 # Extract and setup
 tar -xzf danish_energy_analytics_platform.tar.gz
@@ -24,7 +22,7 @@ export DANISH_ENERGY_DATA_PATH=/path/to/raw_data
 ./stop_services.sh
 ```
 
-### Option 3: Manual Setup
+### Option 2: Manual Setup
 See detailed instructions in `docs/deployment_guides/deployment_guide.md`
 
 #### Prerequisites
@@ -41,7 +39,7 @@ Ensure the pinned versions match the ones listed above.
 
 ## 📊 What's Included
 
-- **Real-time Data Processing**: 1.4M+ records from Danish energy sources
+- **Real-time Data Processing**: ~1.4M records from Danish energy sources
 - **Machine Learning Models**: 97% accuracy for price prediction
 - **Interactive Dashboard**: React-based with real-time updates
 - **Data Warehouse**: PostgreSQL with star schema design
@@ -74,9 +72,7 @@ Ensure the pinned versions match the ones listed above.
 
 ## 📈 Performance
 
-- **Data Processing**: 50,000+ records/minute
-- **Query Response**: <1 second for complex analytics
-- **Dashboard Load**: <2 seconds
+- **Data Volume**: ~1.4M records across 2020-2024 (see `data_ingestion/raw_data/`)
 - **Model Accuracy**: 97% for electricity prices, 91% for renewable energy
 
 ## 🔧 Project Structure
@@ -101,10 +97,9 @@ danish_energy_project/
 
 ## 🚀 Getting Started
 
-1. **Explore the Live Dashboard**: https://vrqaqogw.manus.space
-2. **Read the User Guide**: `docs/user_guides/user_guide.md`
-3. **Setup Locally**: Run `./quick_setup.sh` for automated installation
-4. **Deploy to Production**: Follow `docs/deployment_guides/deployment_guide.md`
+1. **Read the User Guide**: `docs/user_guides/user_guide.md`
+2. **Setup Locally**: Run `./quick_setup.sh` for automated installation
+3. **Deploy to Production**: Follow `docs/deployment_guides/deployment_guide.md`
 
 ## 🔑 Environment Variables
 
@@ -121,15 +116,13 @@ security keys and monitoring ports.
 
 ## 🎉 Success Metrics
 
-- **1,205+ files** created with complete source code
-- **309 MB** comprehensive project package
-- **99.9% uptime** target with robust error handling
+- **168 files** in this repository
+- **109 MB** total project size (29 MB compressed)
 - **Enterprise-ready** with production deployment guides
 
 ---
 
-**Live Dashboard**: https://vrqaqogw.manus.space  
-**Project Size**: 309 MB (51 MB compressed)  
+**Project Size**: 109 MB (29 MB compressed)  
 **Development Time**: 8 comprehensive phases  
 **Status**: Production Ready ✅
 
