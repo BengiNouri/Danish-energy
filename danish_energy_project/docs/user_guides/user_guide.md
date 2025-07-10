@@ -1,10 +1,5 @@
 # Danish Energy Analytics Platform: User Guide
 
-**Author:** Manus AI  
-**Date:** June 15, 2025  
-**Version:** 1.0  
-**Target Audience:** Business Users, Energy Analysts, Decision Makers
-
 ---
 
 ## Table of Contents
