@@ -3,6 +3,8 @@ Danish Energy ML Pipeline
 Comprehensive machine learning models for Danish energy analytics
 """
 
+import os
+import argparse
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -28,7 +30,22 @@ class DanishEnergyMLPipeline:
     Comprehensive ML pipeline for Danish energy analytics
     """
     
-    def __init__(self, data_path='/home/ubuntu/danish_energy_project/data_ingestion/raw_data'):
+    def __init__(self, data_path=None):
+        """Initialize the ML pipeline.
+
+        Args:
+            data_path: Optional path to the folder containing raw CSV files. If
+                not provided, the value is read from the ``DANISH_ENERGY_DATA_PATH``
+                environment variable or defaults to
+                ``/home/ubuntu/danish_energy_project/data_ingestion/raw_data``.
+        """
+
+        if data_path is None:
+            data_path = os.getenv(
+                "DANISH_ENERGY_DATA_PATH",
+                "/home/ubuntu/danish_energy_project/data_ingestion/raw_data",
+            )
+
         self.data_path = data_path
         self.models = {}
         self.scalers = {}
@@ -791,10 +808,22 @@ class DanishEnergyMLPipeline:
 
 def main():
     """Main execution function"""
+
+    parser = argparse.ArgumentParser(description="Run the Danish Energy ML pipeline")
+    parser.add_argument(
+        "--data-path",
+        default=os.getenv(
+            "DANISH_ENERGY_DATA_PATH",
+            "/home/ubuntu/danish_energy_project/data_ingestion/raw_data",
+        ),
+        help="Path to folder containing raw CSV files",
+    )
+    args = parser.parse_args()
+
     print("Starting Danish Energy ML Pipeline...")
-    
+
     # Initialize pipeline
-    pipeline = DanishEnergyMLPipeline()
+    pipeline = DanishEnergyMLPipeline(data_path=args.data_path)
     
     # Load and prepare data
     data = pipeline.load_and_prepare_data()
