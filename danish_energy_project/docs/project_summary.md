@@ -1,10 +1,5 @@
 # Danish Energy Analytics Platform: Project Summary
 
-**Author:** Manus AI  
-**Date:** June 15, 2025  
-**Version:** 1.0  
-**Project Status:** Complete
-
 ---
 
 ## Executive Summary
