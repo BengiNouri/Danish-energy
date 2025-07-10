@@ -82,7 +82,7 @@ danish_energy_project/
 ### **Option 1: Use Live Dashboard (Immediate)**
 1. Visit: https://vrqaqogw.manus.space
 2. Explore the 4 analysis tabs (Renewable Energy, CO₂ Emissions, Electricity Prices, Daily Patterns)
-3. Use time controls (7, 30, 90 days) to analyze different periods
+3. Use time controls (7 days up to 5 years) to analyze different periods
 4. Hover over charts for detailed insights
 
 ### **Option 2: Local Development Setup**

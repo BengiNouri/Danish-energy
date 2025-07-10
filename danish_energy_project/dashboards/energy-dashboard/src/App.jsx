@@ -29,13 +29,14 @@ function App() {
   const fetchData = async () => {
     setLoading(true)
     try {
+      const aggregate = selectedDays >= 365 ? 'month' : 'day'
       const [kpisRes, renewableRes, co2Res, priceRes, hourlyRes, mixRes] = await Promise.all([
-        fetch(`${API_BASE_URL}/kpis`),
-        fetch(`${API_BASE_URL}/renewable-trends?days=${selectedDays}`),
-        fetch(`${API_BASE_URL}/co2-analysis?days=${selectedDays}`),
-        fetch(`${API_BASE_URL}/price-analysis?days=${selectedDays}`),
+        fetch(`${API_BASE_URL}/kpis?days=${selectedDays}`),
+        fetch(`${API_BASE_URL}/renewable-trends?days=${selectedDays}&aggregate=${aggregate}`),
+        fetch(`${API_BASE_URL}/co2-analysis?days=${selectedDays}&aggregate=${aggregate}`),
+        fetch(`${API_BASE_URL}/price-analysis?days=${selectedDays}&aggregate=${aggregate}`),
         fetch(`${API_BASE_URL}/hourly-patterns`),
-        fetch(`${API_BASE_URL}/energy-mix?days=${selectedDays}`)
+        fetch(`${API_BASE_URL}/energy-mix?days=${selectedDays}&aggregate=${aggregate}`)
       ])
 
       const [kpisData, renewableData, co2Data, priceData, hourlyData, mixData] = await Promise.all([
@@ -167,13 +168,37 @@ function App() {
               >
                 30 Days
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={() => setSelectedDays(90)}
                 className={selectedDays === 90 ? 'bg-primary text-primary-foreground' : ''}
               >
                 90 Days
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedDays(180)}
+                className={selectedDays === 180 ? 'bg-primary text-primary-foreground' : ''}
+              >
+                6 Months
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedDays(365)}
+                className={selectedDays === 365 ? 'bg-primary text-primary-foreground' : ''}
+              >
+                1 Year
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedDays(1825)}
+                className={selectedDays === 1825 ? 'bg-primary text-primary-foreground' : ''}
+              >
+                5 Years
               </Button>
               <Button onClick={fetchData} size="sm">
                 Refresh

@@ -68,8 +68,9 @@
 
 ### 📈 **Business Intelligence Features**
 
-#### **Time Range Controls**
-- **7, 30, 90-day views** with dynamic data filtering
+-#### **Time Range Controls**
+- **7-day to 5-year views** with dynamic data filtering
+- **Extended ranges**: 6 months, 1 year, and 5 years (monthly)
 - **Real-time refresh** capability for live monitoring
 - **Last updated timestamp** for data freshness tracking
 
