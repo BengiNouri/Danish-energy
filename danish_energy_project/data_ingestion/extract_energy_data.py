@@ -299,7 +299,7 @@ if __name__ == "__main__":
     # Run extraction for the last 5 years
     summary = extractor.run_full_extraction(
         start_date="2020-01-01",
-        end_date="2024-12-31"
+        end_date="2025-07-10"
     )
     
     print(f"Extraction completed. Summary: {summary}")

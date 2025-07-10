@@ -1,9 +1,10 @@
-# Danish Energy Analytics Platform - Requirements
+# ── Danish Energy Analytics Platform – Requirements ──
+# Tested on Python 3.11
 
 # Core data processing
-pandas==1.5.3
-numpy==1.24.4
-sqlalchemy==2.0.29
+pandas==2.2.2            # needs NumPy ≥1.23.2
+numpy==1.24.3            # compatible with TF 2.13, scikit-learn 1.3, etc.
+SQLAlchemy==2.0.29
 psycopg2-binary==2.9.9
 
 # Data transformation
@@ -14,47 +15,46 @@ dbt-postgres==1.7.5
 scikit-learn==1.3.2
 xgboost==1.7.6
 lightgbm==4.2.0
-tensorflow==2.13.1
+tensorflow==2.13.1        # requires NumPy ≤1.24.3
 joblib==1.3.2
 
-# Web framework and APIs
-flask==2.3.3
-flask-cors==4.0.0
-flask-restx==1.2.0
-flask-limiter==3.5.0
-flask-socketio==5.3.0
+# Web framework & APIs
+Flask==2.3.3
+Flask-Cors==4.0.0
+Flask-RESTx==1.2.0
+Flask-Limiter==3.5.0
+Flask-SocketIO==5.3.0
 
-# Data visualization and analysis
+# Visualisation & analysis
 matplotlib==3.7.3
 seaborn==0.13.2
 plotly==5.15.0
 
-# Utilities and helpers
+# Utilities
 requests==2.31.0
 python-dotenv==1.0.1
 schedule==1.2.1
 click==8.1.7
-pyyaml==6.0.1
+PyYAML==6.0.1
 
-# Development and testing
+# Dev / testing
 pytest==7.4.4
 pytest-cov==4.1.0
 black==23.11.0
 flake8==6.1.0
 
-# Monitoring and logging
+# Monitoring & logging
 prometheus-client==0.17.1
 psutil==5.9.8
 
-# Time series and forecasting
+# Time series & forecasting
 statsmodels==0.14.1
-prophet==1.1.5
+prophet==1.1.5            # pulls cmdstanpy; works with NumPy 1.24.x
 
-# Caching and performance
+# Caching & production server
 redis==4.6.0
 gunicorn==21.2.0
 
 # Security
 cryptography==42.0.0
 bcrypt==4.1.2
-
