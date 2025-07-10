@@ -85,7 +85,12 @@ danish_energy_project/
 3. Use time controls (7 days up to 5 years) to analyze different periods
 4. Hover over charts for detailed insights
 
-### **Option 2: Local Development Setup**
+### **Option 2: Local Development Setup (Automated)**
+```bash
+make up
+```
+
+If you prefer manual steps:
 ```bash
 # 1. Extract the project
 tar -xzf danish_energy_analytics_platform.tar.gz
