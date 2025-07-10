@@ -16,6 +16,8 @@ cd danish_energy_project
 
 # Start services
 ./start_services.sh
+# Stop services
+./stop_services.sh
 ```
 
 ### Option 3: Manual Setup

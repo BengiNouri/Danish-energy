@@ -7,6 +7,7 @@ set -e
 
 echo "🚀 Starting Danish Energy Analytics Platform Services"
 echo "=================================================="
+echo "Use ./stop_services.sh to stop the services"
 
 # Check if we're in the right directory
 if [ ! -f "data_ingestion/extract_energy_data.py" ]; then
@@ -128,7 +129,7 @@ show_status() {
     echo "  API Docs:       http://localhost:5000/docs"
     echo "  Tech Docs:      docs/technical_docs/"
     echo ""
-    echo "Press Ctrl+C to stop all services"
+    echo "Press Ctrl+C or run ./stop_services.sh to stop all services"
 }
 
 # Function to cleanup on exit
