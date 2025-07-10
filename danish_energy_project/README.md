@@ -4,6 +4,15 @@ A comprehensive end-to-end data engineering and analytics platform for Danish en
 
 ## 🚀 Quick Start
 
+### Option 0: Makefile Quick Setup (1 command)
+```bash
+make up
+# Stop services
+make stop
+# Run tests
+make test
+```
+
 
 ### Option 1: Local Setup (5 minutes)
 ```bash

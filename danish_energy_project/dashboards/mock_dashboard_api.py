@@ -131,17 +131,29 @@ def get_kpis():
 
 @app.route('/api/renewable-trends')
 def get_renewable_trends():
-    days = request.args.get('days', 30, type=int)
+    days = request.args.get('days', type=int)
+    months = request.args.get('months', type=int)
+    if days is None and months is not None:
+        days = months * 30
+    days = days or 30
     return jsonify(generate_mock_renewable_trends(days))
 
 @app.route('/api/co2-analysis')
 def get_co2_analysis():
-    days = request.args.get('days', 30, type=int)
+    days = request.args.get('days', type=int)
+    months = request.args.get('months', type=int)
+    if days is None and months is not None:
+        days = months * 30
+    days = days or 30
     return jsonify(generate_mock_co2_analysis(days))
 
 @app.route('/api/price-analysis')
 def get_price_analysis():
-    days = request.args.get('days', 30, type=int)
+    days = request.args.get('days', type=int)
+    months = request.args.get('months', type=int)
+    if days is None and months is not None:
+        days = months * 30
+    days = days or 30
     return jsonify(generate_mock_price_analysis(days))
 
 @app.route('/api/hourly-patterns')
@@ -150,7 +162,11 @@ def get_hourly_patterns():
 
 @app.route('/api/energy-mix')
 def get_energy_mix():
-    days = request.args.get('days', 30, type=int)
+    days = request.args.get('days', type=int)
+    months = request.args.get('months', type=int)
+    if days is None and months is not None:
+        days = months * 30
+    days = days or 30
     return jsonify(generate_mock_energy_mix(days))
 
 @app.route('/api/health')

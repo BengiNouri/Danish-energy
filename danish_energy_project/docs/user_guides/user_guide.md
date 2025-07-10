@@ -45,7 +45,7 @@ The platform uses a tab-based navigation system with the following key elements:
 
 - **Header**: Displays the platform title and current data timestamp
 - **Navigation Tabs**: Switch between different analysis views
-- **Time Controls**: Adjust the analysis period (7, 30, or 90 days)
+- **Time Controls**: Adjust the analysis period (7 days up to 5 years)
 - **KPI Cards**: Show key metrics at the top of each tab
 - **Interactive Charts**: Provide detailed visualizations with hover tooltips
 - **Data Tables**: Display underlying data in tabular format
