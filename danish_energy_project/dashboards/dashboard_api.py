@@ -39,8 +39,8 @@ class DashboardDataService:
             logger.error(f"Query execution error: {e}")
             raise
 
-    def get_kpi_summary(self):
-        """Get key performance indicators"""
+    def get_kpi_summary(self, days=30):
+        """Get key performance indicators for the given period"""
         query = """
         SELECT
             COUNT(DISTINCT co2.date_key)           AS total_days,
@@ -58,15 +58,16 @@ class DashboardDataService:
           ON co2.date_key       = prices.date_key
          AND co2.time_key       = prices.time_key
          AND co2.price_area_key = prices.price_area_key
-        WHERE co2.date_key >= TO_CHAR(CURRENT_DATE - INTERVAL '30 days', 'YYYYMMDD')
+        WHERE co2.date_key >= TO_CHAR(CURRENT_DATE - INTERVAL %s, 'YYYYMMDD')
         """
-        return self.execute_query(query)
+        return self.execute_query(query, (f"{days} days",))
 
-    def get_renewable_trends(self, days=30):
+    def get_renewable_trends(self, days=30, aggregate="day"):
         """Get renewable energy trends over time"""
-        query = """
+        group_col = "DATE_TRUNC('month', d.date_actual)" if aggregate == "month" else "d.date_actual"
+        query = f"""
         SELECT
-            d.date_actual,
+            {group_col} AS date_actual,
             pa.price_area_code,
             AVG(prod.renewable_percentage) as renewable_percentage,
             AVG(prod.wind_percentage) as wind_percentage,
@@ -76,18 +77,19 @@ class DashboardDataService:
         FROM core.fact_energy_production prod
         JOIN core.dim_date d ON prod.date_key = d.date_key
         JOIN core.dim_price_area pa ON prod.price_area_key = pa.price_area_key
-        WHERE d.date_actual >= CURRENT_DATE - INTERVAL '%s days'
+        WHERE d.date_actual >= CURRENT_DATE - INTERVAL %s
             AND pa.is_danish_area = true
-        GROUP BY d.date_actual, pa.price_area_code
-        ORDER BY d.date_actual, pa.price_area_code
+        GROUP BY {group_col}, pa.price_area_code
+        ORDER BY {group_col}, pa.price_area_code
         """
-        return self.execute_query(query, (days,))
+        return self.execute_query(query, (f"{days} days",))
 
-    def get_co2_emissions_analysis(self, days=30):
+    def get_co2_emissions_analysis(self, days=30, aggregate="day"):
         """Get CO2 emissions analysis"""
-        query = """
+        group_col = "DATE_TRUNC('month', d.date_actual)" if aggregate == "month" else "d.date_actual"
+        query = f"""
         SELECT
-            d.date_actual,
+            {group_col} AS date_actual,
             pa.price_area_code,
             AVG(co2.co2_emission_g_kwh) as avg_co2_intensity,
             MIN(co2.co2_emission_g_kwh) as min_co2_intensity,
@@ -99,18 +101,19 @@ class DashboardDataService:
         JOIN core.dim_date d ON co2.date_key = d.date_key
         JOIN core.dim_time t ON co2.time_key = t.time_key
         JOIN core.dim_price_area pa ON co2.price_area_key = pa.price_area_key
-        WHERE d.date_actual >= CURRENT_DATE - INTERVAL '%s days'
+        WHERE d.date_actual >= CURRENT_DATE - INTERVAL %s
             AND pa.is_danish_area = true
-        GROUP BY d.date_actual, pa.price_area_code
-        ORDER BY d.date_actual, pa.price_area_code
+        GROUP BY {group_col}, pa.price_area_code
+        ORDER BY {group_col}, pa.price_area_code
         """
-        return self.execute_query(query, (days,))
+        return self.execute_query(query, (f"{days} days",))
 
-    def get_price_analysis(self, days=30):
+    def get_price_analysis(self, days=30, aggregate="day"):
         """Get electricity price analysis"""
-        query = """
+        group_col = "DATE_TRUNC('month', d.date_actual)" if aggregate == "month" else "d.date_actual"
+        query = f"""
         SELECT
-            d.date_actual,
+            {group_col} AS date_actual,
             pa.price_area_code,
             AVG(prices.spot_price_eur) as avg_price_eur,
             MIN(prices.spot_price_eur) as min_price_eur,
@@ -124,12 +127,12 @@ class DashboardDataService:
         JOIN core.dim_date d ON prices.date_key = d.date_key
         JOIN core.dim_time t ON prices.time_key = t.time_key
         JOIN core.dim_price_area pa ON prices.price_area_key = pa.price_area_key
-        WHERE d.date_actual >= CURRENT_DATE - INTERVAL '%s days'
+        WHERE d.date_actual >= CURRENT_DATE - INTERVAL %s
             AND pa.is_danish_area = true
-        GROUP BY d.date_actual, pa.price_area_code
-        ORDER BY d.date_actual, pa.price_area_code
+        GROUP BY {group_col}, pa.price_area_code
+        ORDER BY {group_col}, pa.price_area_code
         """
-        return self.execute_query(query, (days,))
+        return self.execute_query(query, (f"{days} days",))
 
     def get_hourly_patterns(self, date_from=None, date_to=None):
         """Get hourly patterns for energy and emissions"""
@@ -165,11 +168,12 @@ class DashboardDataService:
         """
         return self.execute_query(query, (date_from, date_to))
 
-    def get_energy_mix_breakdown(self, days=30):
+    def get_energy_mix_breakdown(self, days=30, aggregate="day"):
         """Get detailed energy mix breakdown"""
-        query = """
+        group_col = "DATE_TRUNC('month', d.date_actual)" if aggregate == "month" else "d.date_actual"
+        query = f"""
         SELECT
-            d.date_actual,
+            {group_col} AS date_actual,
             pa.price_area_code,
             SUM(prod.offshore_wind_lt100mw_mwh + prod.offshore_wind_ge100mw_mwh) as offshore_wind_mwh,
             SUM(prod.onshore_wind_lt50kw_mwh + prod.onshore_wind_ge50kw_mwh) as onshore_wind_mwh,
@@ -184,12 +188,12 @@ class DashboardDataService:
         FROM core.fact_energy_production prod
         JOIN core.dim_date d ON prod.date_key = d.date_key
         JOIN core.dim_price_area pa ON prod.price_area_key = pa.price_area_key
-        WHERE d.date_actual >= CURRENT_DATE - INTERVAL '%s days'
+        WHERE d.date_actual >= CURRENT_DATE - INTERVAL %s
             AND pa.is_danish_area = true
-        GROUP BY d.date_actual, pa.price_area_code
-        ORDER BY d.date_actual, pa.price_area_code
+        GROUP BY {group_col}, pa.price_area_code
+        ORDER BY {group_col}, pa.price_area_code
         """
-        return self.execute_query(query, (days,))
+        return self.execute_query(query, (f"{days} days",))
 
 
 # Initialize data service
@@ -208,7 +212,12 @@ data_service = DashboardDataService(db_config)
 def get_kpis():
     """Get key performance indicators"""
     try:
-        df = data_service.get_kpi_summary()
+        days = request.args.get("days", type=int)
+        months = request.args.get("months", type=int)
+        if days is None and months is not None:
+            days = months * 30
+        days = days or 30
+        df = data_service.get_kpi_summary(days)
         return jsonify(df.to_dict("records")[0] if not df.empty else {})
     except Exception as e:
         logger.error(f"Error in /api/kpis: {e}")
@@ -219,8 +228,15 @@ def get_kpis():
 def get_renewable_trends():
     """Get renewable energy trends"""
     try:
-        days = request.args.get("days", 30, type=int)
-        df = data_service.get_renewable_trends(days)
+        days = request.args.get("days", type=int)
+        months = request.args.get("months", type=int)
+        aggregate = request.args.get("aggregate")
+        if days is None and months is not None:
+            days = months * 30
+        days = days or 30
+        if not aggregate:
+            aggregate = "month" if days >= 365 else "day"
+        df = data_service.get_renewable_trends(days, aggregate)
         return jsonify(df.to_dict("records"))
     except Exception as e:
         logger.error(f"Error in /api/renewable-trends: {e}")
@@ -231,8 +247,15 @@ def get_renewable_trends():
 def get_co2_analysis():
     """Get CO2 emissions analysis"""
     try:
-        days = request.args.get("days", 30, type=int)
-        df = data_service.get_co2_emissions_analysis(days)
+        days = request.args.get("days", type=int)
+        months = request.args.get("months", type=int)
+        aggregate = request.args.get("aggregate")
+        if days is None and months is not None:
+            days = months * 30
+        days = days or 30
+        if not aggregate:
+            aggregate = "month" if days >= 365 else "day"
+        df = data_service.get_co2_emissions_analysis(days, aggregate)
         return jsonify(df.to_dict("records"))
     except Exception as e:
         logger.error(f"Error in /api/co2-analysis: {e}")
@@ -243,8 +266,15 @@ def get_co2_analysis():
 def get_price_analysis():
     """Get electricity price analysis"""
     try:
-        days = request.args.get("days", 30, type=int)
-        df = data_service.get_price_analysis(days)
+        days = request.args.get("days", type=int)
+        months = request.args.get("months", type=int)
+        aggregate = request.args.get("aggregate")
+        if days is None and months is not None:
+            days = months * 30
+        days = days or 30
+        if not aggregate:
+            aggregate = "month" if days >= 365 else "day"
+        df = data_service.get_price_analysis(days, aggregate)
         return jsonify(df.to_dict("records"))
     except Exception as e:
         logger.error(f"Error in /api/price-analysis: {e}")
@@ -268,8 +298,15 @@ def get_hourly_patterns():
 def get_energy_mix():
     """Get energy mix breakdown"""
     try:
-        days = request.args.get("days", 30, type=int)
-        df = data_service.get_energy_mix_breakdown(days)
+        days = request.args.get("days", type=int)
+        months = request.args.get("months", type=int)
+        aggregate = request.args.get("aggregate")
+        if days is None and months is not None:
+            days = months * 30
+        days = days or 30
+        if not aggregate:
+            aggregate = "month" if days >= 365 else "day"
+        df = data_service.get_energy_mix_breakdown(days, aggregate)
         return jsonify(df.to_dict("records"))
     except Exception as e:
         logger.error(f"Error in /api/energy-mix: {e}")

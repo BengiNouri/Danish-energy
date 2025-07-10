@@ -13,10 +13,10 @@ def test_get_renewable_trends_calls_execute_query():
     service = DashboardDataService({'host': 'h', 'database': 'd', 'user': 'u', 'password': 'p'})
     df = pd.DataFrame({'a': [1]})
     with patch.object(service, 'execute_query', return_value=df) as mock_exec:
-        result = service.get_renewable_trends(days=7)
+        result = service.get_renewable_trends(days=7, aggregate='day')
         mock_exec.assert_called_once()
         args, _ = mock_exec.call_args
-        assert args[1] == (7,)
+        assert args[1] == ('7 days',)
         assert result.equals(df)
 
 

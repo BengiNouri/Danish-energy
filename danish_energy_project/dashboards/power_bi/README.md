@@ -78,7 +78,7 @@ SWITCH(
 ## Dashboard Features
 
 ### Interactive Elements
-- **Date Range Selector**: 7, 30, 90 days, or custom range
+- **Date Range Selector**: 7, 30, 90 days, extended to 6 months, 1 year, or 5 years
 - **Regional Filter**: DK1, DK2, or combined view
 - **Energy Source Filter**: Wind, Solar, Hydro, Conventional
 - **Time Period Filter**: Peak hours, off-peak, weekends
