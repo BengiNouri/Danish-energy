@@ -1,0 +1,23 @@
+{
+  "name": "DS_DataLake_co2_emissions_@{formatDateTime(utcNow(), 'yyyyMMdd')}_csv",
+  "type": "Microsoft.DataFactory/factories/datasets",
+  "properties": {
+    "type": "DelimitedText",
+    "linkedServiceName": {
+      "referenceName": "AzureDataLakeStorage",
+      "type": "LinkedServiceReference"
+    },
+    "typeProperties": {
+      "location": {
+        "type": "AzureBlobFSLocation",
+        "fileName": "co2_emissions_@{formatDateTime(utcNow(), 'yyyyMMdd')}.csv",
+        "folderPath": "raw/co2_emissions",
+        "fileSystem": "energydata"
+      },
+      "columnDelimiter": ",",
+      "escapeChar": "\\\\",
+      "firstRowAsHeader": true,
+      "quoteChar": "\""
+    }
+  }
+}

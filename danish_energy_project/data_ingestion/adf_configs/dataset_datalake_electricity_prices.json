@@ -1,0 +1,23 @@
+{
+  "name": "DS_DataLake_electricity_prices_@{formatDateTime(utcNow(), 'yyyyMMdd')}_csv",
+  "type": "Microsoft.DataFactory/factories/datasets",
+  "properties": {
+    "type": "DelimitedText",
+    "linkedServiceName": {
+      "referenceName": "AzureDataLakeStorage",
+      "type": "LinkedServiceReference"
+    },
+    "typeProperties": {
+      "location": {
+        "type": "AzureBlobFSLocation",
+        "fileName": "electricity_prices_@{formatDateTime(utcNow(), 'yyyyMMdd')}.csv",
+        "folderPath": "raw/electricity_prices",
+        "fileSystem": "energydata"
+      },
+      "columnDelimiter": ",",
+      "escapeChar": "\\\\",
+      "firstRowAsHeader": true,
+      "quoteChar": "\""
+    }
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "name": "PL_DanishEnergyDataIngestion",
+  "type": "Microsoft.DataFactory/factories/pipelines",
+  "properties": {
+    "activities": [
+      {
+        "name": "Extract_CO2_Emissions",
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "RestSource",
+            "httpRequestTimeout": "00:01:40",
+            "requestInterval": "00.00:00:00.010",
+            "requestMethod": "GET",
+            "additionalHeaders": {
+              "Accept": "application/json"
+            }
+          },
+          "sink": {
+            "type": "DelimitedTextSink",
+            "storeSettings": {
+              "type": "AzureBlobFSWriteSettings"
+            },
+            "formatSettings": {
+              "type": "DelimitedTextWriteSettings",
+              "quoteAllText": false,
+              "fileExtension": ".csv"
+            }
+          }
+        },
+        "inputs": [
+          {
+            "referenceName": "DS_CO2Emissions",
+            "type": "DatasetReference"
+          }
+        ],
+        "outputs": [
+          {
+            "referenceName": "DS_DataLake_CO2_Raw",
+            "type": "DatasetReference"
+          }
+        ]
+      },
+      {
+        "name": "Extract_Renewable_Energy",
+        "type": "Copy",
+        "dependsOn": [
+          {
+            "activity": "Extract_CO2_Emissions",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "source": {
+            "type": "RestSource",
+            "httpRequestTimeout": "00:01:40",
+            "requestInterval": "00.00:00:00.010",
+            "requestMethod": "GET"
+          },
+          "sink": {
+            "type": "DelimitedTextSink",
+            "storeSettings": {
+              "type": "AzureBlobFSWriteSettings"
+            },
+            "formatSettings": {
+              "type": "DelimitedTextWriteSettings",
+              "quoteAllText": false,
+              "fileExtension": ".csv"
+            }
+          }
+        },
+        "inputs": [
+          {
+            "referenceName": "DS_RenewableEnergy",
+            "type": "DatasetReference"
+          }
+        ],
+        "outputs": [
+          {
+            "referenceName": "DS_DataLake_Renewable_Raw",
+            "type": "DatasetReference"
+          }
+        ]
+      },
+      {
+        "name": "Extract_Electricity_Prices",
+        "type": "Copy",
+        "dependsOn": [
+          {
+            "activity": "Extract_Renewable_Energy",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "source": {
+            "type": "RestSource",
+            "httpRequestTimeout": "00:01:40",
+            "requestInterval": "00.00:00:00.010",
+            "requestMethod": "GET"
+          },
+          "sink": {
+            "type": "DelimitedTextSink",
+            "storeSettings": {
+              "type": "AzureBlobFSWriteSettings"
+            },
+            "formatSettings": {
+              "type": "DelimitedTextWriteSettings",
+              "quoteAllText": false,
+              "fileExtension": ".csv"
+            }
+          }
+        },
+        "inputs": [
+          {
+            "referenceName": "DS_ElectricityPrices",
+            "type": "DatasetReference"
+          }
+        ],
+        "outputs": [
+          {
+            "referenceName": "DS_DataLake_Prices_Raw",
+            "type": "DatasetReference"
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "StartDate": {
+        "type": "string",
+        "defaultValue": "2020-01-01"
+      },
+      "EndDate": {
+        "type": "string",
+        "defaultValue": "2024-12-31"
+      }
+    },
+    "annotations": [
+      "Danish Energy Data Ingestion Pipeline"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "EnergiDataServiceAPI",
+  "type": "Microsoft.DataFactory/factories/linkedservices",
+  "properties": {
+    "type": "RestService",
+    "typeProperties": {
+      "url": "https://api.energidataservice.dk",
+      "enableServerCertificateValidation": true,
+      "authenticationType": "Anonymous"
+    }
+  }
+}

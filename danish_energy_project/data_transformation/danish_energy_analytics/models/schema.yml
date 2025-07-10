@@ -1,0 +1,257 @@
+version: 2
+
+sources:
+  - name: raw_energy
+    description: Raw energy data from Danish sources
+    tables:
+      - name: co2_emissions
+        description: Raw CO2 emissions data from Energi Data Service
+        columns:
+          - name: minutes5utc
+            description: Timestamp in UTC (5-minute intervals)
+            tests:
+              - not_null
+          - name: minutes5dk
+            description: Timestamp in Danish time
+          - name: pricearea
+            description: Price area code (DK1, DK2, etc.)
+            tests:
+              - not_null
+          - name: co2emission
+            description: CO2 emissions in g CO2/kWh
+            tests:
+              - not_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  max_value: 1000
+
+      - name: renewable_energy
+        description: Raw renewable energy production data
+        columns:
+          - name: hourutc
+            description: Timestamp in UTC (hourly)
+            tests:
+              - not_null
+          - name: hourdk
+            description: Timestamp in Danish time
+          - name: pricearea
+            description: Price area code
+            tests:
+              - not_null
+          - name: grossconsumptionmwh
+            description: Gross consumption in MWh
+            tests:
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  max_value: 10000
+
+      - name: electricity_prices
+        description: Raw electricity price data
+        columns:
+          - name: hourutc
+            description: Timestamp in UTC (hourly)
+            tests:
+              - not_null
+          - name: hourdk
+            description: Timestamp in Danish time
+          - name: pricearea
+            description: Price area code
+            tests:
+              - not_null
+          - name: spotpriceeur
+            description: Spot price in EUR/MWh
+            tests:
+              - not_null
+
+models:
+  - name: stg_co2_emissions
+    description: Staged CO2 emissions data with cleaned timestamps and validated measures
+    columns:
+      - name: timestamp_utc
+        description: Standardized UTC timestamp
+        tests:
+          - not_null
+      - name: price_area_code
+        description: Standardized price area code
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['DK1', 'DK2']
+      - name: co2_emission_g_kwh
+        description: CO2 emissions in g CO2/kWh
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000
+
+  - name: stg_renewable_energy
+    description: Staged renewable energy data with calculated totals
+    columns:
+      - name: timestamp_utc
+        description: Standardized UTC timestamp
+        tests:
+          - not_null
+      - name: price_area_code
+        description: Standardized price area code
+        tests:
+          - not_null
+      - name: total_renewable_mwh
+        description: Total renewable energy production
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+  - name: stg_electricity_prices
+    description: Staged electricity price data with currency conversions
+    columns:
+      - name: timestamp_utc
+        description: Standardized UTC timestamp
+        tests:
+          - not_null
+      - name: price_area_code
+        description: Standardized price area code
+        tests:
+          - not_null
+      - name: spot_price_eur
+        description: Spot price in EUR/MWh
+        tests:
+          - not_null
+
+  - name: dim_date
+    description: Date dimension table
+    columns:
+      - name: date_key
+        description: Date key in YYYYMMDD format
+        tests:
+          - not_null
+          - unique
+      - name: date_actual
+        description: Actual date
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_time
+    description: Time dimension table
+    columns:
+      - name: time_key
+        description: Time key in HHMM format
+        tests:
+          - not_null
+          - unique
+      - name: hour
+        description: Hour (0-23)
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 23
+
+  - name: dim_price_area
+    description: Price area dimension table
+    columns:
+      - name: price_area_key
+        description: Price area surrogate key
+        tests:
+          - not_null
+          - unique
+      - name: price_area_code
+        description: Price area natural key
+        tests:
+          - not_null
+          - unique
+
+  - name: fact_co2_emissions
+    description: CO2 emissions fact table
+    columns:
+      - name: date_key
+        description: Foreign key to date dimension
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: time_key
+        description: Foreign key to time dimension
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_time')
+              field: time_key
+      - name: price_area_key
+        description: Foreign key to price area dimension
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_price_area')
+              field: price_area_key
+      - name: co2_emission_g_kwh
+        description: CO2 emissions measure
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1000
+
+  - name: fact_energy_production
+    description: Energy production fact table
+    columns:
+      - name: date_key
+        description: Foreign key to date dimension
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: time_key
+        description: Foreign key to time dimension
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_time')
+              field: time_key
+      - name: price_area_key
+        description: Foreign key to price area dimension
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_price_area')
+              field: price_area_key
+      - name: total_renewable_mwh
+        description: Total renewable production
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+  - name: fact_electricity_prices
+    description: Electricity prices fact table
+    columns:
+      - name: date_key
+        description: Foreign key to date dimension
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: time_key
+        description: Foreign key to time dimension
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_time')
+              field: time_key
+      - name: price_area_key
+        description: Foreign key to price area dimension
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_price_area')
+              field: price_area_key
+      - name: spot_price_eur
+        description: Spot price in EUR
+        tests:
+          - not_null
+

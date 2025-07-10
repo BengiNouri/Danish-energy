@@ -1,0 +1,91 @@
+name: 'danish_energy_analytics'
+version: '1.0.0'
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'danish_energy_analytics'
+
+# These configurations specify where dbt should look for different types of files.
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Model configurations
+models:
+  danish_energy_analytics:
+    # Staging models - materialized as views for development speed
+    staging:
+      +materialized: view
+      +docs:
+        node_color: "lightblue"
+    
+    # Intermediate models - materialized as views
+    intermediate:
+      +materialized: view
+      +docs:
+        node_color: "orange"
+    
+    # Marts - materialized as tables for performance
+    marts:
+      +materialized: table
+      +docs:
+        node_color: "green"
+      
+      # Core business entities
+      core:
+        +materialized: table
+        +post-hook: "analyze {{ this }}"
+      
+      # Analytics data marts
+      analytics:
+        +materialized: table
+        +post-hook: "analyze {{ this }}"
+
+# Test configurations
+tests:
+  +store_failures: true
+  +severity: warn
+
+# Seed configurations
+seeds:
+  danish_energy_analytics:
+    +column_types:
+      date_key: varchar(8)
+      price_area_key: varchar(10)
+
+# Snapshot configurations
+snapshots:
+  danish_energy_analytics:
+    +target_schema: snapshots
+    +strategy: timestamp
+    +updated_at: updated_at
+
+# Variables for the project
+vars:
+  # Date range for incremental models
+  start_date: '2020-01-01'
+  end_date: '2024-12-31'
+  
+  # Business logic variables
+  peak_hours_start: 17
+  peak_hours_end: 20
+  business_hours_start: 8
+  business_hours_end: 18
+  
+  # Data quality thresholds
+  max_co2_intensity: 1000  # g CO2/kWh
+  max_price_dkk: 20000     # DKK/MWh
+  min_price_dkk: -5000     # DKK/MWh
+
+# Macros and custom configurations
+dispatch:
+  - macro_namespace: dbt_utils
+    search_order: ['danish_energy_analytics', 'dbt_utils']
+

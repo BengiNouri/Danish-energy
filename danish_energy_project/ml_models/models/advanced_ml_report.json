@@ -1,0 +1,103 @@
+{
+  "pipeline_info": {
+    "pipeline_type": "Advanced ML with Ensemble Methods",
+    "models_trained": 3,
+    "training_date": "2025-06-15T10:20:02.867541",
+    "features_used": "Time series, lag features, rolling statistics, interactions"
+  },
+  "model_performance": {
+    "co2_emission": {
+      "best_model": "XGBoost",
+      "rmse": 6.76,
+      "r2_score": 0.74
+    },
+    "renewable_energy": {
+      "best_model": "LightGBM",
+      "rmse": 37.8,
+      "r2_score": 0.913
+    },
+    "electricity_price": {
+      "best_model": "XGBoost",
+      "rmse": 3.35,
+      "r2_score": 0.969
+    }
+  },
+  "ensemble_analysis": {
+    "co2_emission": {
+      "component_models": [
+        "XGBoost",
+        "LightGBM",
+        "Gradient Boosting",
+        "Neural Network"
+      ],
+      "model_weights": [
+        0.27936863898963465,
+        0.27438615885117523,
+        0.273025506975607,
+        0.17321969518358313
+      ],
+      "ensemble_rmse": 7.15,
+      "ensemble_r2": 0.709
+    },
+    "renewable_energy": {
+      "component_models": [
+        "XGBoost",
+        "LightGBM",
+        "Gradient Boosting",
+        "Neural Network"
+      ],
+      "model_weights": [
+        0.2758551669355662,
+        0.33093549929139165,
+        0.26543613164014945,
+        0.12777320213289264
+      ],
+      "ensemble_rmse": 43.75,
+      "ensemble_r2": 0.884
+    },
+    "electricity_price": {
+      "component_models": [
+        "XGBoost",
+        "LightGBM",
+        "Gradient Boosting",
+        "Neural Network"
+      ],
+      "model_weights": [
+        0.32077418692840387,
+        0.27124445597336366,
+        0.3131208569129908,
+        0.09486050018524173
+      ],
+      "ensemble_rmse": 3.45,
+      "ensemble_r2": 0.967
+    }
+  },
+  "predictions_analysis": {
+    "co2_emission": {
+      "next_hour": 122.98,
+      "next_24h_avg": 126.51,
+      "next_48h_trend": "increasing",
+      "volatility": 6.16
+    },
+    "renewable_energy": {
+      "next_hour": 1146.49,
+      "next_24h_avg": 1151.93,
+      "next_48h_trend": "increasing",
+      "volatility": 6.74
+    },
+    "electricity_price": {
+      "next_hour": 83.02,
+      "next_24h_avg": 86.23,
+      "next_48h_trend": "increasing",
+      "volatility": 7.47
+    }
+  },
+  "business_recommendations": [
+    "Deploy ensemble models for production to achieve highest accuracy",
+    "Implement real-time feature engineering pipeline for lag and rolling features",
+    "Use confidence intervals for risk assessment in energy trading decisions",
+    "Monitor model performance drift and retrain monthly with new data",
+    "Integrate weather forecasts to improve renewable energy predictions",
+    "Implement automated alerts for anomalous predictions outside confidence intervals"
+  ]
+}

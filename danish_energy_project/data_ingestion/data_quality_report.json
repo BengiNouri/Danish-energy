@@ -1,0 +1,119 @@
+{
+  "assessment_date": "2025-06-15T09:20:58.296760",
+  "datasets_analyzed": [
+    "co2_emissions",
+    "renewable_energy",
+    "electricity_prices"
+  ],
+  "total_records": 1446094,
+  "total_memory_mb": 134.31804656982422,
+  "data_quality_summary": {
+    "co2_emissions": {
+      "shape": [
+        1051654,
+        4
+      ],
+      "missing_values": {
+        "Minutes5UTC": 0,
+        "Minutes5DK": 0,
+        "PriceArea": 0,
+        "CO2Emission": 0
+      },
+      "data_types": {
+        "Minutes5UTC": "datetime64[ns]",
+        "Minutes5DK": "datetime64[ns]",
+        "PriceArea": "object",
+        "CO2Emission": "float64"
+      },
+      "memory_usage_mb": 84.24669647216797
+    },
+    "renewable_energy": {
+      "shape": [
+        87648,
+        28
+      ],
+      "missing_values": {
+        "HourUTC": 0,
+        "HourDK": 0,
+        "PriceArea": 0,
+        "CentralPowerMWh": 0,
+        "LocalPowerMWh": 0,
+        "CommercialPowerMWh": 0,
+        "LocalPowerSelfConMWh": 0,
+        "OffshoreWindLt100MW_MWh": 0,
+        "OffshoreWindGe100MW_MWh": 0,
+        "OnshoreWindLt50kW_MWh": 0,
+        "OnshoreWindGe50kW_MWh": 0,
+        "HydroPowerMWh": 0,
+        "SolarPowerLt10kW_MWh": 0,
+        "SolarPowerGe10Lt40kW_MWh": 0,
+        "SolarPowerGe40kW_MWh": 0,
+        "SolarPowerSelfConMWh": 0,
+        "UnknownProdMWh": 17568,
+        "ExchangeNO_MWh": 43824,
+        "ExchangeSE_MWh": 0,
+        "ExchangeGE_MWh": 0,
+        "ExchangeNL_MWh": 43824,
+        "ExchangeGB_MWh": 77712,
+        "ExchangeGreatBelt_MWh": 0,
+        "GrossConsumptionMWh": 0,
+        "GridLossTransmissionMWh": 0,
+        "GridLossInterconnectorsMWh": 0,
+        "GridLossDistributionMWh": 0,
+        "PowerToHeatMWh": 0
+      },
+      "data_types": {
+        "HourUTC": "datetime64[ns]",
+        "HourDK": "datetime64[ns]",
+        "PriceArea": "object",
+        "CentralPowerMWh": "float64",
+        "LocalPowerMWh": "float64",
+        "CommercialPowerMWh": "float64",
+        "LocalPowerSelfConMWh": "float64",
+        "OffshoreWindLt100MW_MWh": "float64",
+        "OffshoreWindGe100MW_MWh": "float64",
+        "OnshoreWindLt50kW_MWh": "float64",
+        "OnshoreWindGe50kW_MWh": "float64",
+        "HydroPowerMWh": "float64",
+        "SolarPowerLt10kW_MWh": "float64",
+        "SolarPowerGe10Lt40kW_MWh": "float64",
+        "SolarPowerGe40kW_MWh": "float64",
+        "SolarPowerSelfConMWh": "float64",
+        "UnknownProdMWh": "float64",
+        "ExchangeNO_MWh": "float64",
+        "ExchangeSE_MWh": "float64",
+        "ExchangeGE_MWh": "float64",
+        "ExchangeNL_MWh": "float64",
+        "ExchangeGB_MWh": "float64",
+        "ExchangeGreatBelt_MWh": "float64",
+        "GrossConsumptionMWh": "float64",
+        "GridLossTransmissionMWh": "float64",
+        "GridLossInterconnectorsMWh": "float64",
+        "GridLossDistributionMWh": "float64",
+        "PowerToHeatMWh": "float64"
+      },
+      "memory_usage_mb": 23.0703125
+    },
+    "electricity_prices": {
+      "shape": [
+        306792,
+        5
+      ],
+      "missing_values": {
+        "HourUTC": 0,
+        "HourDK": 0,
+        "PriceArea": 0,
+        "SpotPriceDKK": 24,
+        "SpotPriceEUR": 0
+      },
+      "data_types": {
+        "HourUTC": "datetime64[ns]",
+        "HourDK": "datetime64[ns]",
+        "PriceArea": "object",
+        "SpotPriceDKK": "float64",
+        "SpotPriceEUR": "float64"
+      },
+      "memory_usage_mb": 27.00103759765625
+    }
+  }
+}

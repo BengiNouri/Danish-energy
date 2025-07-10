@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+*.log
+# virtual environments
+danish_energy_project/venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo

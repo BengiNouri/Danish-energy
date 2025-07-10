@@ -1,0 +1,53 @@
+{
+  "pipeline_info": {
+    "data_records": 745,
+    "features_count": 13,
+    "models_trained": 3,
+    "training_date": "2025-06-15T10:18:01.696108"
+  },
+  "model_performance": {
+    "co2_emission": {
+      "best_model": "Linear Regression",
+      "rmse": 8.47,
+      "mae": 6.77,
+      "r2_score": 0.593
+    },
+    "renewable_energy": {
+      "best_model": "Linear Regression",
+      "rmse": 33.41,
+      "mae": 22.77,
+      "r2_score": 0.935
+    },
+    "electricity_price": {
+      "best_model": "Ridge Regression",
+      "rmse": 14.59,
+      "mae": 11.58,
+      "r2_score": 0.402
+    }
+  },
+  "predictions_sample": {
+    "co2_emission": {
+      "next_hour_prediction": 124.88,
+      "next_day_avg": 137.5,
+      "model_used": "Linear Regression"
+    },
+    "renewable_energy": {
+      "next_hour_prediction": 1168.24,
+      "next_day_avg": 1154.57,
+      "model_used": "Linear Regression"
+    },
+    "electricity_price": {
+      "next_hour_prediction": 71.42,
+      "next_day_avg": 87.77,
+      "model_used": "Ridge Regression"
+    }
+  },
+  "business_insights": [
+    "CO\u2082 emissions prediction achieves R\u00b2 = 0.593",
+    "Renewable energy forecasting shows R\u00b2 = 0.935",
+    "Electricity price prediction demonstrates R\u00b2 = 0.402",
+    "Time-based features (hour, day patterns) are key predictors across all models",
+    "Renewable energy percentage significantly impacts CO\u2082 emissions and pricing",
+    "Peak hour classification improves prediction accuracy for all energy metrics"
+  ]
+}

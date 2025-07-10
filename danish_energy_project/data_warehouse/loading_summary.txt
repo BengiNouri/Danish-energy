@@ -1,0 +1,32 @@
+
+Data Warehouse Loading Summary
+==============================
+Date: 2025-07-02 13:57:27
+
+Raw Data Loaded:
+- Total rows: 1,446,094
+
+ETL Results:
+ETL Pipeline completed successfully:
+- CO2 emissions: 0 rows loaded
+- Energy production: 0 rows loaded  
+- Electricity prices: 0 rows loaded
+Total: 0 rows loaded
+
+Final Table Counts:
+- Raw CO2 Emissions: 22,084,734 rows
+- Raw Renewable Energy: 1,840,608 rows
+- Raw Electricity Prices: 6,442,632 rows
+- Date Dimension: 2,193 rows
+- Time Dimension: 288 rows
+- Price Area Dimension: 2 rows
+- CO2 Emissions Fact: 19,981,426 rows
+- Energy Production Fact: 1,665,312 rows
+- Electricity Prices Fact: 1,665,312 rows
+
+Data Quality Checks:
+- Null CO2 values: 0
+- Invalid CO2 values (outside 0-1000): 0
+- Negative renewable percentages: 0
+- Extreme price values: 0
+- Orphaned CO2 records (missing date): 0
