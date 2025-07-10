@@ -9,3 +9,6 @@ danish_energy_project/venv/
 __pycache__/
 *.pyc
 *.pyo
+# Python virtual-envs
+.venv/
+venv/
