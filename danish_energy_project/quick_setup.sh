@@ -5,6 +5,11 @@
 
 set -e  # Exit on any error
 
+# Default location for raw CSVs
+DATA_PATH_DEFAULT="$(pwd)/data_ingestion/raw_data"
+export DANISH_ENERGY_DATA_PATH="${DANISH_ENERGY_DATA_PATH:-$DATA_PATH_DEFAULT}"
+echo "Using data path: $DANISH_ENERGY_DATA_PATH"
+
 echo "🚀 Danish Energy Analytics Platform - Quick Setup"
 echo "================================================="
 

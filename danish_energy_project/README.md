@@ -12,6 +12,10 @@ Visit the live dashboard: **https://vrqaqogw.manus.space**
 # Extract and setup
 tar -xzf danish_energy_analytics_platform.tar.gz
 cd danish_energy_project
+
+# Optional: specify where raw CSVs are stored
+export DANISH_ENERGY_DATA_PATH=/path/to/raw_data
+
 ./quick_setup.sh
 
 # Start services
