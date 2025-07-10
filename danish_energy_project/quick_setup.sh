@@ -24,17 +24,19 @@ install_system_deps() {
 
   if command_exists apt-get; then
     sudo apt-get update
-    # Core packages
-    sudo apt-get install -y python3 python3-venv python3-pip postgresql postgresql-contrib \
-    build-essential libpq-dev curl git
-    # Node 18.x from NodeSource
-    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-    sudo apt-get install -y nodejs
+    # Core packages pinned to stable versions
+    sudo apt-get install -y \
+      python3.11 python3.11-venv python3.11-pip \
+      postgresql=16+257build1.1 postgresql-contrib=16+257build1.1 \
+      build-essential libpq-dev curl git
+    # Node.js pinned version
+    sudo apt-get install -y nodejs=18.19.1+dfsg-6ubuntu5
     # Install pnpm globally
-    sudo npm install -g pnpm
+    sudo npm install -g pnpm@10.4.1
   else
-    echo "❌ Unsupported package manager. Install Python 3.11, PostgreSQL, Node.js & pnpm manually."
-    exit 1
+    echo "⚠️ Unsupported package manager detected."
+    echo "   Please install Python 3.11, PostgreSQL 16, Node.js 18.19.1 and pnpm 10.4.1 using your system's package manager."
+    return 1
   fi
 }
 
@@ -47,8 +49,8 @@ setup_python_env() {
 
   source venv/bin/activate
   pip install --upgrade pip
-  # Install exactly the libs this project needs
-  pip install flask flask-cors pandas psycopg2-binary requests
+  # Install pinned project requirements
+  pip install -r requirements.txt
 
   echo "✅ Python environment ready"
 }

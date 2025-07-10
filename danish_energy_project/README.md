@@ -21,6 +21,18 @@ cd danish_energy_project
 ### Option 3: Manual Setup
 See detailed instructions in `docs/deployment_guides/deployment_guide.md`
 
+#### Prerequisites
+
+- **Operating System:** Ubuntu 22.04+ (Debian based). Other distributions or macOS
+  are supported but require manual package installation.
+- **Python:** 3.11
+- **PostgreSQL:** 16
+- **Node.js:** 18.19.1 with `pnpm` 10.4.1
+
+For non‑Debian systems (e.g. Fedora, Arch or macOS) install the above packages
+using your platform's package manager before running `start_services.sh`.
+Ensure the pinned versions match the ones listed above.
+
 ## 📊 What's Included
 
 - **Real-time Data Processing**: 1.4M+ records from Danish energy sources
@@ -87,6 +99,12 @@ danish_energy_project/
 2. **Read the User Guide**: `docs/user_guides/user_guide.md`
 3. **Setup Locally**: Run `./quick_setup.sh` for automated installation
 4. **Deploy to Production**: Follow `docs/deployment_guides/deployment_guide.md`
+
+## 🔑 Environment Variables
+
+Before running the platform, create a `.env` file with the variables listed in
+`docs/environment_variables.md`. These values configure database access,
+security keys and monitoring ports.
 
 ## 📞 Support
 
