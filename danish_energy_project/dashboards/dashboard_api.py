@@ -197,13 +197,14 @@ class DashboardDataService:
 
 
 # Initialize data service
+# dashboards/dashboard_api.py  ← keep this one; it talks to Postgres
 db_config = {
-    "host": "localhost",
-    "database": "danish_energy_analytics",
-    "user": "postgres",
-    "password": "postgres",
+    "host":        "localhost",
+    "port":        5432,               # default
+    "database":    "dk_energy",        # <-- change
+    "user":        "dk_energy",        # <-- change
+    "password":    "dk_energy_pw",     # <-- change
 }
-
 data_service = DashboardDataService(db_config)
 
 

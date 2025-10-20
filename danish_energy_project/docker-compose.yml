@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    environment:
+      MB_DB_FILE: /metabase-data/metabase.db  # internal H2 for Metabase’s own metadata
+    volumes:
+      - ./metabase-data:/metabase-data        # persists your dashboards
+    ports:
+      - "3000:3000"                           # http://localhost:3000
+    restart: unless-stopped
