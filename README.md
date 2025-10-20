@@ -6,7 +6,7 @@ This repository contains the code for the Danish Energy Analytics Platform. It p
 
 1. **Clone the repository**
    ```bash
-   git clone <this repo>
+   git clone https://github.com/BengiNouri/Danish-energy.git
    cd Danish-energy
    ```
 
